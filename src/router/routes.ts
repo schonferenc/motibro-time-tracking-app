@@ -4,11 +4,25 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [
+      {
+        path: '',
+        component: () => import('pages/IndexPage.vue'),
+      },
+      {
+        path: 'daily',
+        component: () => import('pages/DailyViewPage.vue'),
+      },
+      {
+        path: 'weekly',
+        component: () => import('pages/WeeklyViewPage.vue'),
+      },
+      {
+        path: 'monthly',
+        component: () => import('pages/MonthlyViewPage.vue'),
+      },
+    ],
   },
-
-  // Always leave this as last one,
-  // but you can also remove it
   {
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),

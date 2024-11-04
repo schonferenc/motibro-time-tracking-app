@@ -1,43 +1,12 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+    <app-header :toggleLeftDrawer="toggleLeftDrawer" />
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
+    <app-drawer
+      :linksList="linksList"
+      :isOpen="leftDrawerOpen"
       v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
+    />
 
     <q-page-container>
       <router-view />
@@ -47,60 +16,52 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import EssentialLink, { EssentialLinkProps } from 'components/EssentialLink.vue';
+import AppHeader from 'src/components/AppHeader.vue';
+import AppDrawer from 'src/components/AppDrawer.vue';
+import { AppDrawerLinkProps } from 'src/components/AppDrawerLink.vue';
+import { useQuasar } from 'quasar';
+import { useTimeEntries } from 'src/composables/useTimeEntries';
+import { onMounted } from 'vue';
 
-defineOptions({
-  name: 'MainLayout'
+const { initializeTimeEntries } = useTimeEntries();
+
+// Initialize time entries on component mount
+onMounted(() => {
+  initializeTimeEntries();
 });
 
-const linksList: EssentialLinkProps[] = [
+// Links for the app drawer
+const linksList: AppDrawerLinkProps[] = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Összesített nézet',
+    caption: 'Feladatok megtekintése az összesített nézetben',
+    icon: 'view_list',
+    link: '/',
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: 'Napi nézet',
+    caption: 'Feladatok megtekintése napi nézetben',
+    icon: 'today',
+    link: '/daily',
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: 'Heti nézet',
+    caption: 'Feladatok megtekintése heti nézetben',
+    icon: 'calendar_today',
+    link: '/weekly',
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    title: 'Havi nézet',
+    caption: 'Feladatok megtekintése havi nézetben',
+    icon: 'calendar_month',
+    link: '/monthly',
   },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
 ];
 
-const leftDrawerOpen = ref(false);
+const { screen } = useQuasar();
+const leftDrawerOpen = ref(screen.gt.md);
 
-function toggleLeftDrawer () {
+const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value;
-}
+};
 </script>
