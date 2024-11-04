@@ -1,0 +1,1 @@
+import{Q as e,A as a}from"./AppTable.96912f15.js";import{B as t,C as o,D as s,E as p,F as r}from"./index.c69a0804.js";import"./useTimeEntries.28fb8627.js";const d=t({__name:"DailyViewPage",setup(i){return(c,n)=>(o(),s(e,{class:"q-pa-md"},{default:p(()=>[r(a,{title:"Napi n\xE9zet",view:"daily"})]),_:1}))}});export{d as default};

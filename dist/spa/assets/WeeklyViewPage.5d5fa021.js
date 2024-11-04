@@ -1,0 +1,1 @@
+import{Q as e,A as a}from"./AppTable.96912f15.js";import{B as t,C as o,D as s,E as r,F as p}from"./index.c69a0804.js";import"./useTimeEntries.28fb8627.js";const f=t({__name:"WeeklyViewPage",setup(c){return(i,n)=>(o(),s(e,{class:"q-pa-md"},{default:r(()=>[p(a,{title:"Heti n\xE9zet",view:"weekly"})]),_:1}))}});export{f as default};
